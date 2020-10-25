@@ -32,7 +32,7 @@ def derive_wallets(coin=BTC,mnemonic=mnemonic, depth=3):
      (output, err) = p.communicate()
      p_status = p.wait()
 
-     #keys = json.loads(output)
+     #wallet_keys = json.loads(output)
 
      return json.loads(output)
 
@@ -86,10 +86,31 @@ coins = {
 }
 
 pprint(coins)
+
 # Send transactions!
+
 # Bitcoin transaction
 
+
+btc_pk = coins['BTCTEST'][0]['privkey']
+
+btc_key = priv_key_to_account(BTCTEST, btc_pk)
+btc_trx = create_tx(BTCTEST, btc_key, 'mkfBAYL16aj8DyGBtrnBeCvJcRdUGQ2qEV', 0.000001)
+
+btc_trx
+
+send_tx(BTCTEST, btc_key, 'mkfBAYL16aj8DyGBtrnBeCvJcRdUGQ2qEV', 0.000001)
 
 
 # Ethereium transaction
 
+
+eth_pk = coins['eth'][0]['privkey']
+eth_key = priv_key_to_account(ETH, eth_pk)
+
+# Create transaction
+eth_trx = create_tx(ETH, eth_key, '0x617437699df36E772dFbA7bE0ca9e0cA35d47b51', 20)
+eth_trx
+
+# Send transaction
+send_tx(ETH, eth_key, '0x617437699df36E772dFbA7bE0ca9e0cA35d47b51', 20)
