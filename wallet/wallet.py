@@ -53,7 +53,7 @@ def create_tx(coin, account, to, amount):
          return PrivateKeyTestnet.prepare_transaction(account.address, [(to, amount, BTC)])
     elif coin ==ETH:
          value = w3.toWei(amount, "ether")
-         gastEstimate = w3.eth.estimateGas({"to": to, "from": account.address, "amount": value})
+         gasEstimate = w3.eth.estimateGas({"to": to, "from": account.address, "amount": value})
          return {
               "to": to,
               "from": account.address,
@@ -61,7 +61,7 @@ def create_tx(coin, account, to, amount):
               "gas": gasEstimate,
               "gasPrice": w3.eth.generateGasPrice(),
               "nonce": w3.eth.getTransactionCount(account.address),
-              "chainId": we.net.chainId
+              "chainId": w3.eth.chainId
          }
     else:
          return ValueError('Incorrect coin code')
@@ -93,24 +93,27 @@ pprint(coins)
 
 
 btc_pk = coins['BTCTEST'][0]['privkey']
+print(btc_pk)
 
 btc_key = priv_key_to_account(BTCTEST, btc_pk)
-btc_trx = create_tx(BTCTEST, btc_key, 'mkfBAYL16aj8DyGBtrnBeCvJcRdUGQ2qEV', 0.000001)
 
+btc_trx = create_tx(BTCTEST, btc_key, 'miEBp5r3ocePV9sLyTpXmGGVtrkWwpsmGN', 0.00000001)
 btc_trx
 
-send_tx(BTCTEST, btc_key, 'mkfBAYL16aj8DyGBtrnBeCvJcRdUGQ2qEV', 0.000001)
+send_tx(BTCTEST, btc_key, 'miEBp5r3ocePV9sLyTpXmGGVtrkWwpsmGN', 0.00000001)
 
 
 # Ethereium transaction
 
 
 eth_pk = coins['eth'][0]['privkey']
+print(eth_pk)
 eth_key = priv_key_to_account(ETH, eth_pk)
 
 # Create transaction
-eth_trx = create_tx(ETH, eth_key, '0x617437699df36E772dFbA7bE0ca9e0cA35d47b51', 20)
+
+eth_trx = create_tx(ETH, eth_key, '0x9361aE15D51B69A7686b440D6BFCA6510076D2Ba', 20)
 eth_trx
 
 # Send transaction
-send_tx(ETH, eth_key, '0x617437699df36E772dFbA7bE0ca9e0cA35d47b51', 20)
+send_tx(ETH, eth_key, '0x9361aE15D51B69A7686b440D6BFCA6510076D2Ba', 20)
